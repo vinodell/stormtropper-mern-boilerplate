@@ -1,5 +1,3 @@
-const { ResolvePlugin } = require("webpack")
-
 const { resolve } = require('path')
 
 const config = {
@@ -14,8 +12,8 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.[js|jsx]$/,
-        loaders: ['babel_loader'],
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
         exclude: /node_modules/
         // описания правил работы с jsx для JavaScript, к которому применим babel
       }
