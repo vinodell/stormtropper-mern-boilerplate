@@ -1,6 +1,7 @@
 const { resolve } = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ESlintPlugin = require("eslint-webpack-plugin");
 
 const config = {
   entry: "./client/main.js",
@@ -26,12 +27,6 @@ const config = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.(js|jsx)$/i,
-        use: "eslint-loader",
-        exclude: /node_modules/,
-      },
-      {
         test: /\.(js|jsx)$/i,
         use: "babel-loader",
         exclude: /node_modules/,
@@ -47,13 +42,16 @@ const config = {
             },
           },
           "css-loader", // собирает все эти файлы в единые куски (2)
-          "sass-loader", // sass преобразует это в css (1)
+          "sass-loader", // sass преобразует это в css (1) *!webpack считывает код снизу вверх!
         ],
         exclude: /node_modules/,
       },
     ],
   },
   plugins: [
+    new ESlintPlugin({
+      extensions: ["js", "jsx"],
+    }),
     new MiniCssExtractPlugin({
       filename: "css/style.css",
     }),
