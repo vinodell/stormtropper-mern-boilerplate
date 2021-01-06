@@ -4,10 +4,10 @@ require('dotenv').config() // библиотека, позволяющая чи�
 const server = express()
 const port = process.env.PORT || 8080 // берем переменную из .env
 
-server.use(express.static('public'))
+server.use('/extra', express.static(`${__dirname}/public`))
 // отсюда выгружаем статические данные, которые не меняются
 // в зависимости от пользователя. Текст/картинки/стили
-server.use(express.json({ limit: '5mb' }))
+server.use(express.json({ limit: '50kb' }))
 server.use((req, res, next) => {
   console.log(`${new Date()}: ${req.url} ${req.method} from ${req.ip}`)
   next()
@@ -31,5 +31,5 @@ server.post('/users', (req, res) => {
 })
 
 server.listen(port, () => {
-  console.log(`Serving at http://localhost:${port}/`)
+  console.log(`serving at http://localhost:${port}/`)
 })
