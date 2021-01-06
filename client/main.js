@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import './style.scss'
 
 const Main = () => {
   return <div>vinodel</div>;

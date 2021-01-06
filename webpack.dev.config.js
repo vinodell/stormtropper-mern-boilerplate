@@ -1,5 +1,6 @@
 const { resolve } = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const config = {
   entry: "./client/main.js",
@@ -25,14 +26,37 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        loader: "babel-loader",
+        enforce: 'pre',
+        test: /\.(js|jsx)$/i,
+        use: "eslint-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(js|jsx)$/i,
+        use: "babel-loader",
         exclude: /node_modules/,
         // описания правил работы с jsx для JavaScript, к которому применим babel
+      },
+      {
+        test: /\.(scss|css)$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader, // выводит css файлы в отдельный файл (3)
+            options: {
+              publicPath: "../",
+            },
+          },
+          "css-loader", // собирает все эти файлы в единые куски (2)
+          "sass-loader", // sass преобразует это в css (1)
+        ],
+        exclude: /node_modules/,
       },
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/style.css",
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {
