@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Root from './components/config/root'
+import Root from './config/root'
 import './assets/styles/style.scss'
 
 const target = document.getElementById('root')
