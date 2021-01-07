@@ -5,9 +5,10 @@
   "author": "vinodel",
   "license": "MIT",
   "scripts": {
-    "watch:server": "nodemon server.js",
-    "dev:build": "webpack --config webpack.dev.config.js",
-    "dev:watch": "webpack serve --config webpack.dev.config.js"
+    "dev": "yarn run watch:server & yarn run dev:server",
+    "watch:server": "nodemon ./server/server.js",
+    "build:client": "webpack --config webpack.dev.config.js",
+    "watch:client": "webpack serve --config webpack.dev.config.js"
   },
   "dependencies": {
     "dotenv": "^8.2.0",

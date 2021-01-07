@@ -16,12 +16,15 @@ const config = {
     hot: true,
     open: true,
     contentBase: resolve(__dirname, 'dist'),
-    port: 8080,
+    port: 8081,    // client port
     host: 'localhost',
     index: 'index.html',
     overlay: {
       warnings: false,
       errors: true
+    },
+    proxy: {
+      '/*': 'localhost:8080'  // server port
     }
   },
   module: {
