@@ -17,6 +17,10 @@ server.get('/', (req, res) => {
   res.send('express serv dude')
 })
 
+server.get('/api/v1/test', (req, res) => {
+  res.send('api test page')
+})
+
 server.get('/name/:img', (req, res) => {
   res.send(`Hey, ${req.params.img}`)
 })
