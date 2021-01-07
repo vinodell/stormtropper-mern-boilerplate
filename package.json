@@ -8,13 +8,17 @@
     "dev": "yarn run watch:client & yarn run watch:server",
     "watch:server": "nodemon ./server/server.js",
     "build:client": "webpack --config webpack.dev.config.js",
-    "watch:client": "webpack serve --config webpack.dev.config.js"
+    "watch:client": "rm -rf dist & webpack serve --config webpack.dev.config.js"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
