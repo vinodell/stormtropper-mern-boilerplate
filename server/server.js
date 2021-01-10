@@ -1,7 +1,15 @@
 const express = require('express')
+const io = require('socket.io')
+const http = require('http')
+
 require('dotenv').config() // библиотека, позволяющая читать файл .env
 
 const server = express()
+const ioServer = http.createServer(server)
+const socketIO = io(ioServer, {
+  path: '/ws'
+})
+
 const port = process.env.PORT || 8080 // берем переменную из .env
 
 server.use('/extra', express.static(`${__dirname}/public`)) // при огромных нагрузках в 100к пользвателей, именно статик жрет больше всего производительности Node.js
@@ -17,23 +25,13 @@ server.get('/', (req, res) => {
   res.send('express serv dude')
 })
 
-server.get('/api/v1/test', (req, res) => {
-  res.send('api test page')
+socketIO.on('connection', (socket) => {
+  console.log(`user with id ${socket.id} is finally connected`)
+  socket.on('disconnect', () => {
+    console.log(`the session of user ${socket.id} is OVER`)
+  })
 })
 
-server.get('/name/:img', (req, res) => {
-  res.send(`Hey, ${req.params.img}`)
-})
-
-server.post('/users', (req, res) => {
-  const user = {
-    name: req.body.name,
-    age: req.body.age,
-    date: new Date()
-  }
-  res.json(user)
-})
-
-server.listen(port, () => {
+ioServer.listen(port, () => {
   console.log(`serving at http://localhost:${port}/`)
 })
