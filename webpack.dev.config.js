@@ -1,7 +1,13 @@
+const webpack = require('webpack')
 const { resolve } = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ESlintPlugin = require('eslint-webpack-plugin')
+
+require('dotenv').config()
+
+const { PORT, SOCKETS_IO_STATUS } = process.env
+// const socketStatus = process.env.SOCKETS_IO_STATUS === 'true' ? true : false
 
 const config = {
   entry: './client/main.js',
@@ -16,7 +22,7 @@ const config = {
     hot: true,
     open: true,
     contentBase: resolve(__dirname, 'dist'),
-    port: 8081,    // client port
+    port: 8081, // client port
     host: 'localhost',
     index: 'index.html',
     overlay: {
@@ -25,8 +31,8 @@ const config = {
     },
     proxy: {
       context: ['/api', '/ws'],
-      target: `http://localhost:${process.env.PORT || 8080}`,  // server port
-      ws: true
+      target: `http://localhost:${PORT || 8080}`, // server port
+      ws: (process.env.SOCKETS_IO_STATUS === 'true')
     }
   },
   module: {
@@ -68,6 +74,9 @@ const config = {
           // to: относительно path: resolve(__dirname, 'dist'), то есть папки /dist
         }
       ]
+    }),
+    new webpack.DefinePlugin({
+      SOCKETS_IO_STATUS
     })
   ]
 }

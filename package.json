@@ -6,11 +6,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "yarn run watch:client & yarn run watch:server",
-    "watch:server": "nodemon ./server/server.js",
+    "watch:server": "nodemon start.js",
     "build:client": "webpack --config webpack.dev.config.js",
     "watch:client": "rm -rf dist & webpack serve --config webpack.dev.config.js"
   },
   "dependencies": {
+    "@babel/register": "^7.12.10",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "react": "^17.0.1",
@@ -38,8 +39,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-webpack-plugin": "^2.4.1",
     "mini-css-extract-plugin": "^1.3.3",
-    "node-sass": "^5.0.0",
     "nodemon": "^2.0.6",
+    "node-sass": "^5.0.0",
     "sass-loader": "^10.1.0",
     "webpack": "^5.11.1",
     "webpack-cli": "^4.3.1",

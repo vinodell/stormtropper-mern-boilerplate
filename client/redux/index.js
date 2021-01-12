@@ -13,9 +13,11 @@ const composeEchantress = composeFunc(applyMiddleware(...middleware))
 
 const store = createStore(createRootReducers(), initialState, composeEchantress)
 
-// eslint-disable-next-line
-const socket = io(`${window.location.origin}`, {
-  path: '/ws'
-})
+if (SOCKETS_IO_STATUS || false) {
+  // eslint-disable-next-line
+  const socket = io(`${window.location.origin}`, {
+    path: '/ws'
+  })
+}
 
 export default store
