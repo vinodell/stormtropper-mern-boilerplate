@@ -35,6 +35,11 @@ if (config.socketStatus) {
   })
 }
 
+if (config.mongoStatus) {
+  console.log('mongodb status is: turn on')
+  const url = 'mongodb://127.0.0.1/'
+}
+
 ioServer.listen(PORT, () => {
   console.log(`serving at http://localhost:${PORT}/`)
 })
