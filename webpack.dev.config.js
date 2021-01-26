@@ -53,7 +53,14 @@ const config = {
               publicPath: '../'
             }
           },
-          'css-loader', // собирает все эти файлы в единые куски (2)
+          // 'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          }, // собирает все эти файлы в единые куски (2)
+          'postcss-loader',
           'sass-loader' // sass преобразует это в css (1) *!webpack считывает код снизу вверх!
         ],
         exclude: /node_modules/
