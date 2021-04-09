@@ -53,7 +53,6 @@ const config = {
               publicPath: '../'
             }
           },
-          // 'style-loader',
           {
             loader: 'css-loader',
             options: {
