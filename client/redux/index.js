@@ -1,23 +1,20 @@
-import { createStore, compose, applyMiddleware } from 'redux'
+import { createBrowserHistory } from 'history'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
-import { io } from 'socket.io-client'
 
-import createRootReducers from './reducers/store'
+import rootReducer from './reducers/store'
 
-const initialState = {}
-const middleware = [thunk]
+export const history = createBrowserHistory()
+
+const preloadedState = {}
+
+const middleware = [routerMiddleware(history), thunk]
 
 const composeFunc = process.env.NODE_ENV === 'development' ? composeWithDevTools : compose
-const composeEchantress = composeFunc(applyMiddleware(...middleware))
+const composedEnhancers = composeFunc(applyMiddleware(...middleware))
 
-const store = createStore(createRootReducers(), initialState, composeEchantress)
-
-if (SOCKETS_IO_STATUS || false) {
-  // eslint-disable-next-line
-  const socket = io(`${window.location.origin}`, {
-    path: '/ws'
-  })
-}
+const store = createStore(rootReducer(history), preloadedState, composedEnhancers)
 
 export default store

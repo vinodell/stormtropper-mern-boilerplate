@@ -1,59 +1,71 @@
 import express from 'express'
+import http from 'http'
+import cookieParser from 'cookie-parser'
 import io from 'socket.io'
 import regeneratorRuntime from 'regenerator-runtime'
-import http from 'http'
-import mongooseService from './services/mongoose'
 
 import config from './config'
+import mongooseService from './services/mongoose'
+
+import Html from '../client/html'
+
+const { resolve } = require('path')
 
 const server = express()
-const ioServer = http.createServer(server)
+const httpServer = http.createServer(server)
 
-const PORT = config.port // берем переменную из .env
+const PORT = config.port
 
-server.use('/extra', express.static(`${__dirname}/public`)) // при огромных нагрузках в 100к пользвателей, именно статик жрет больше всего производительности в Node.js
-// отсюда выгружаем статические данные, которые не меняются
-// в зависимости от пользователя. Текст/картинки/стили
-server.use(express.json({ limit: '50kb' })) // парсит данные, чтобы мы могли получать json-данные с помощью запросов ниже
-// server.use((req, res, next) => {
-//   console.log(`${new Date()}: ${req.url} ${req.method} from ${req.ip}`)
-//   next()
-// })
+const middleware = [
+  cookieParser(),
+  express.json({ limit: '50kb' }),
+  express.static(resolve(__dirname, '../dist'))
+]
 
-let msgHistory = [] // загулшка(вместо БД)
-
-mongooseService.connect()
+middleware.forEach((it) => server.use(it))
 
 server.get('/', (req, res) => {
-  res.send('express serv dude')
+  res.send('Express Server')
 })
 
-server.post('/api/v1/auth', (req, res) => {
-  console.log(req.body)
-  res.json({ status: 'ok' })
-})
+if (config.mongoStatus) {
+  console.log('MongoDB Enabled: ', config.mongoStatus)
+  mongooseService.connect()
+}
 
-console.log('Socket_IO status is:', config.socketStatus)
-if (config.socketStatus === 'true') {
-  const socketIO = io(ioServer, {
+if (config.socketStatus) {
+  console.log('Sockets Enabled: ', config.socketStatus)
+  const socketIO = io(httpServer, {
     path: '/ws'
   })
 
   socketIO.on('connection', (socket) => {
-    console.log(`user with id: ${socket.id} is finally connected`)
-    socketIO.to(socket.id).emit('messageHistory', msgHistory) // обновление истории сообщений будет происходить только у пользователя, который подключился, а не у всех сразу
-
-    socket.on('newMessage', (arg) => {
-      msgHistory.push(arg) // сообщение после отправки добавляется в историю сообщений
-      socketIO.emit('messageHistory', msgHistory) // обновленная история сообщений отправляется всем клиентам
-    })
+    console.log(`${socket.id} login`)
 
     socket.on('disconnect', () => {
-      console.log(`the session of user: ${socket.id} is OVER`)
+      console.log(`${socket.id} logout`)
     })
   })
 }
 
-ioServer.listen(PORT, () => {
-  console.log(`serving at http://localhost:${PORT}/`)
+server.get('/*', (req, res) => {
+  const initialState = {
+    location: req.url
+  }
+
+  return res.send(
+    Html({
+      body: '',
+      initialState
+    })
+  )
 })
+
+server.use('/api/', (req, res) => {
+  res.status(404)
+  res.end()
+})
+
+httpServer.listen(PORT)
+
+console.log(`Serving at http://localhost:${PORT}`)

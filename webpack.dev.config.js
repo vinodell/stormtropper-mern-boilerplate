@@ -1,10 +1,10 @@
+require('dotenv').config()
+
 const webpack = require('webpack')
 const { resolve } = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ESlintPlugin = require('eslint-webpack-plugin')
-
-require('dotenv').config()
 
 const { PORT, SOCKETS_IO_STATUS } = process.env
 // const socketStatus = process.env.SOCKETS_IO_STATUS === 'true' ? true : false
@@ -32,9 +32,10 @@ const config = {
     proxy: {
       context: ['/api', '/ws'],
       target: `http://localhost:${PORT || 8080}`, // server port
-      ws: SOCKETS_IO_STATUS === 'true'
+      ws: !!SOCKETS_IO_STATUS
     },
-    publicPath: '/'
+    publicPath: '/',
+    historyApiFallback: true
   },
   module: {
     rules: [
