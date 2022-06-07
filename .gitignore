@@ -1,0 +1,13 @@
+# Environment
+.env
+
+# Modules for NODE.JS
+node_modules
+
+# Production
+dist
+public
+.DS_Store
+
+# Yarn
+yarn-error.log
