@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "root": true,
   "extends": [
     "airbnb",
@@ -27,9 +27,17 @@
     "deferredPrompt": true,
     "axios": true,
     "globalThis": true,
-    "SOCKETS_IO_STATUS": true
+    "SOCKETS_ENABLE": true
   },
   "rules": {
+    "react/no-unstable-nested-components": [
+      "warn",
+      { "allowAsProps": true }
+    ],
+    "react/function-component-definition": [2, {
+      "namedComponents": "arrow-function",
+      "unnamedComponents": "arrow-function"
+    }],
     "space-before-function-paren": "off",
     "react/prefer-stateless-function": "warn",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -73,6 +81,5 @@
     "max-classes-per-file": "warn",
     "react/jsx-props-no-spreading": ["off"],
     "camelcase": "off"
-
   }
 }
