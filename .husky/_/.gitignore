@@ -1,14 +1,1 @@
-# Environment
-.env
-
-# Modules for NODE.JS
-node_modules
-.vscode
-
-# Production
-dist
-public
-.DS_Store
-
-# Yarn
-yarn-error.log
+*
