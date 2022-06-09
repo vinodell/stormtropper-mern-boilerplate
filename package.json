@@ -9,7 +9,7 @@
     "watch:server": "nodemon start.js",
     "watch:client": "webpack serve --config webpack.config.js",
     "build:client": "webpack serve --config webpack.config.js",
-    "eslint": "eslint ./client/**/**.js ./server/**/**.js",
+    "test": "eslint ./client/**/**.js ./server/**/**.js",
     "prepare": "husky install"
   },
   "dependencies": {
