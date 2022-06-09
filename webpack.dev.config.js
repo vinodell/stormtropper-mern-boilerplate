@@ -17,16 +17,18 @@ const config = {
     contentBase: resolve(__dirname, 'dist'),
     port: 8081, // client port
     host: 'localhost',
-    overlay: {
-      warnings: false,
-      errors: true
+    client: {
+      overlay: {
+        warnings: false,
+        errors: true
+      }
     },
-    historyApiFallback: true
-  },
-  proxy: {
-    context: ['/api', '/ws'],
-    target: `http://localhost:${PORT || 8080}`, // server port
-    ws: SOCKETS_IO_STATUS
+    historyApiFallback: true,
+    proxy: {
+      context: ['/api', '/ws'],
+      target: `http://localhost:${PORT || 8080}`, // server port
+      ws: SOCKETS_IO_STATUS
+    }
   }
 }
 

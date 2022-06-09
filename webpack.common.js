@@ -2,13 +2,12 @@ require('dotenv').config()
 
 const { resolve } = require('path')
 
-const ESlintPlugin = require('eslint-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const autoprefixer = require('autoprefixer')
-const { DefinePlugin } = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { DefinePlugin } = require('webpack')
 
 const { SOCKETS_IO_STATUS } = process.env
 
@@ -53,13 +52,7 @@ const config = {
     ]
   },
   plugins: [
-    // new LoaderOptionsPlugin({
-    //   options: {
-    //     context: __dirname,
-    //     postcss: [autoprefixer]
-    //   }
-    // }),
-    new ESlintPlugin({
+    new ESLintPlugin({
       extensions: ['js', 'jsx'],
       exclude: 'node_modules'
     }),
@@ -76,24 +69,6 @@ const config = {
           from: 'client/html.js',
           to: '[name][ext]'
         }
-        // {
-        //   from: 'client/assets/images',
-        //   to: 'assets/images',
-        //   noErrorOnMissing: true,
-        //   globOptions: {
-        //     dot: true,
-        //     ignore: ['**/.gitkeep']
-        //   }
-        // },
-        // {
-        //   from: 'client/assets/fonts',
-        //   to: 'assets/fonts',
-        //   noErrorOnMissing: true,
-        //   globOptions: {
-        //     dot: true,
-        //     ignore: ['**/.gitkeep']
-        //   }
-        // }
       ]
     }),
     new CleanWebpackPlugin(),

@@ -23,7 +23,7 @@
   "globals": {
     "axios": true,
     "globalThis": true,
-    "SOCKETS_ENABLE": true
+    "SOCKETS_IO_STATUS": true
   },
   "rules": {
     "react/no-unstable-nested-components": [
