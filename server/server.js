@@ -2,7 +2,6 @@ import express from 'express'
 import http from 'http'
 import cookieParser from 'cookie-parser'
 import io from 'socket.io'
-import regeneratorRuntime from 'regenerator-runtime'
 
 import config from './config'
 import mongooseService from './services/mongoose'
@@ -25,7 +24,7 @@ const middleware = [
 middleware.forEach((it) => server.use(it))
 
 server.get('/', (req, res) => {
-  res.send('Express Server')
+  res.send('Express Server is working...')
 })
 
 if (config.mongoStatus) {
@@ -68,4 +67,4 @@ server.use('/api/', (req, res) => {
 
 httpServer.listen(PORT)
 
-console.log(`Serving at http://localhost:${PORT}`)
+console.log(`the Death Star is serving at http://localhost:${PORT}`)

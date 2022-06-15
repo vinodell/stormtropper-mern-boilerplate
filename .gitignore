@@ -1,13 +1,15 @@
-# Environment
+# Environment variables
 .env
 
-# Modules for NODE.JS
+# Modules for NODEJS
 node_modules
 
 # Production
 dist
-public
-.DS_Store
 
 # Yarn
 yarn-error.log
+
+# Misc
+.DS_Store
+coverage
