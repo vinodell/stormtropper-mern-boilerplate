@@ -1,6 +1,5 @@
 require('dotenv').config()
 
-const { resolve } = require('path')
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 
@@ -13,23 +12,23 @@ const config = {
   },
   devServer: {
     hot: true,
-    open: true,
+    // open: true,
     // server: 'https',
-    contentBase: resolve(__dirname, 'dist'),
     port: 8081, // client port
     host: 'localhost',
     client: {
       overlay: {
+        errors: true,
         warnings: false,
-        errors: true
+        progress: true // prints compilation progress in percentage in the browser.
       }
     },
-    historyApiFallback: true,
     proxy: {
       context: ['/api', '/ws'],
       target: `http://localhost:${PORT || 8080}`, // server port
       ws: SOCKETS_IO_STATUS
-    }
+    },
+    historyApiFallback: true
   }
 }
 

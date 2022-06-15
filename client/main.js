@@ -1,11 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 
 import Root from './config/root'
 
 import './assets/styles/style.scss'
 
-const target = document.getElementById('#root')
+const target = ReactDOM.createRoot(document.getElementById('root'))
 
 const render = (Component) => {
   ReactDOM.render(<Component />, target)

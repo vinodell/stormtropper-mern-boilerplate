@@ -4,8 +4,6 @@ const TerserPlugin = require('terser-webpack-plugin')
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 
-require('dotenv').config()
-
 const config = {
   mode: 'production',
   optimization: {
