@@ -5,7 +5,7 @@ import Root from './config/root'
 
 import './assets/styles/style.scss'
 
-const target = ReactDOM.createRoot(document.getElementById('root'))
+const target = document.getElementById('root')
 
 const render = (Component) => {
   ReactDOM.render(<Component />, target)
