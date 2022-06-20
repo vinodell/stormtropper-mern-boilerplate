@@ -1,7 +1,5 @@
 import React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import { Router } from 'react-router'
-import { createBrowserHistory } from 'history'
 import {
   Routes, Route, Navigate, BrowserRouter
 } from 'react-router-dom'
@@ -11,38 +9,34 @@ import Startup from './startup'
 import Dummy from '../components/dummy'
 import Main from '../components/main'
 
-const history = createBrowserHistory()
-
-const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
+const OnlyAnonymousRoute = () => {
   const { user, token } = useSelector((s) => s.auth)
-  const func = (props) => {
-    return !!user && !!token ? <Navigate to="/channels" /> : <Component {...props} />
+  const func = () => {
+    return !!user && !!token ? <Navigate to="/channels" /> : <Main />
   }
-  return <Route {...rest} render={func} />
+  return <Route element={func} />
 }
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = () => {
   const { user, token } = useSelector((s) => s.auth)
-  const func = (props) => {
-    return !!user && !!token ? <Component {...props} /> : <Navigate to="/login" />
+  const func = () => {
+    return !!user && !!token ? <Main /> : <Navigate to="/login" />
   }
-  return <Route {...rest} render={func} />
+  return <Route element={func} />
 }
 
 const Root = () => {
   return (
     <Provider store={store}>
-      <Router history={history}>
-        <Startup>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Dummy />} />
-              <OnlyAnonymousRoute path="anonymous" element={<Main />} />
-              <PrivateRoute path="private" element={<Main />} />
-            </Routes>
-          </BrowserRouter>
-        </Startup>
-      </Router>
+      <Startup>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Dummy />} />
+            <Route path="anonymous" element={() => <OnlyAnonymousRoute />} />
+            <Route path="private" element={() => <PrivateRoute />} />
+          </Routes>
+        </BrowserRouter>
+      </Startup>
     </Provider>
   )
 }
