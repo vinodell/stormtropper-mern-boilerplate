@@ -13,9 +13,12 @@ const TestCase = () => {
   return <Route path="/go" element={<Main />} />
 }
 
-// const OnlyAnonymousRoute = () => {
+// const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
 //   const { user, token } = useSelector((s) => s.auth)
-//   return !!user && !!token ? <Main /> : <Main />
+//   const func = (props) => {
+//     return !!user && !!token ? <Redirect to="/channels" /> : <Component {...props} />
+//   }
+//   return <Route {...rest} render={func} />
 // }
 
 // const PrivateRoute = () => {
