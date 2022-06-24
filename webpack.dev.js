@@ -12,16 +12,13 @@ const config = {
   },
   devServer: {
     hot: true,
-    // open: true,
-    // server: 'https',
+    open: true,
     port: 8081, // client port
     host: 'localhost',
-    client: {
-      overlay: {
-        errors: true,
-        warnings: false,
-        progress: true // prints compilation progress in percentage in the browser.
-      }
+    overlay: {
+      errors: true,
+      warnings: false,
+      progress: true // prints compilation progress in percentage in the browser.
     },
     proxy: {
       context: ['/api', '/ws'],
